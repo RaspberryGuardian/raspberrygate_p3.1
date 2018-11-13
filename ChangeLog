@@ -1,0 +1,23 @@
+2018-11-13  Hironobu SUZUKI  <hironobu@ewr>
+
+	* Raspberry Gate's Security Filtering was added.
+	
+
+2018-08-29  Hironobu SUZUKI  <suzuki.hironobu@gmail.com>
+
+	* hostapd-config-update.sh was added to generate /etc/hostapd.conf
+
+	* bridge.sh was updated to handle wlan0.
+
+	* router-nat.sh was update to handle wlan0.
+
+	* install.sh was update to install hostapd and its related files.
+
+	* hostapd-raspg.conf was added. Template of /etc/hostapd.conf
+
+	* raspg_initd was update to handle wlan0.
+
+	* hostapd-raspg.conf was add to template for hostapd daemon.
+	
+	
+

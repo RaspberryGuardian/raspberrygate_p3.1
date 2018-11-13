@@ -1,0 +1,14 @@
+debug: 10
+domain:
+   udp: allow
+   tcp: deny
+   
+ssh:
+   tcp: allow
+
+http:  allow
+https: allow
+18080: allow
+
+default:  deny
+

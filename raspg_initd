@@ -1,0 +1,105 @@
+#!/bin/bash 
+### BEGIN INIT INFO
+# Provides:          raspg
+# Required-Start:    
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Start Raspberry Guardian's Raspberry Gate.
+### END INIT INFO
+
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin:/opt/raspg/bin:/opt/raspg/lib
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+RASPGDIR=/opt/raspg/
+
+ECHO=echo
+
+do_start_raspg() {
+    $ECHO "Raspberry Gate Starting Sequence Started"
+    if [ ! -x $RASPGDIR/bin/config-update.sh ] ; then
+	$ECHO "RG Internal Error: No executable config-update.sh"
+	exit 1
+    fi
+    ### Run configuration file update
+    $RASPGDIR/bin/config-update.sh
+
+    if [ ! -x $RASPGDIR/bin/hostapd-config-update.sh ] ; then
+	$ECHO "RG Internal Error: No executable hostapd-config-update.sh"
+	exit 1
+    fi
+    ### hostapd configuration file update
+    $RASPGDIR/bin/hostapd-config-update.sh
+}
+
+do_start_mode() {
+
+    if [ -f $RASPGDIR/etc/raspg.conf ] ; then
+	MODE=$(grep Mode: $RASPGDIR/etc/raspg.conf | awk '{print $2}')
+    else
+	echo 'RG: Not found: ' $RASPGDIR/etc/raspg.conf
+    fi
+    
+    if [ chk$MODE == "chk" ] ; then
+	$ECHO 'RG: Mode is not found in configuration file'
+	exit 1
+    fi
+    
+    if [ $MODE == "normal" ] ; then
+	  $ECHO	 'RG: Start Normal Mode'
+	  return 0
+    fi
+
+    if [ $MODE == "maintain"  ] ; then
+	  $ECHO	 'RG: Start Maintenance Mode'
+	  return 0
+    fi
+
+    if [ $MODE == "bridge" ] ; then
+	$ECHO  'Start Bridge Mode'
+	if [ -x /opt/raspg/bin/bridge.sh ] ; then
+	    /opt/raspg/bin/bridge.sh
+	    return $?
+	else
+	    $ECHO "RG: Internal Error --- bridge.sh was not found"
+	    exit 1
+	fi
+    fi
+    
+    if [ $MODE == "router" ] ; then
+	if [ -x /opt/raspg/bin/router-nat.sh ] ; then
+	    $ECHO 'Start Router w/ NAT Mode'
+	    /opt/raspg/bin/router-nat.sh
+	    return $?
+	else
+	    $ECHO "RG: Internal Error --- router-nat.sh was not found"
+	    exit 1
+	fi
+    fi
+
+    $ECHO "RG: Unknown Mode --- " $MODE
+    exit 2
+}
+
+case "$1" in
+    start)
+	do_start_raspg
+
+	## Run mode (router|bridge|normal|maintain)
+	do_start_mode
+	
+        ;;
+    restart|reload|force-reload)
+        echo "Error: argument '$1' not supported" >&2
+        exit 3
+        ;;
+    stop)
+        ;;
+    *)
+        echo "Usage: $0 start|stop" >&2
+        exit 3
+        ;;
+esac
