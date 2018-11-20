@@ -1,6 +1,9 @@
 #!/bin/bash
 
-RASPGDIR=/opt/raspg
+if [ x$RASPGDIR == 'x' ]; then
+    RASPGDIR=/opt/raspg
+fi
+
 
 TARGET=eth1
 #EHTERNET=$(ifconfig | grep $TARGET | awk '{print $1}')

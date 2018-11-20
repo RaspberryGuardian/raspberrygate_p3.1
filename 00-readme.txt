@@ -6,8 +6,12 @@ Step 1: Become root.
 Step 2: run install.sh for install udhcpd
 
  # install.sh
+ or
+ # bash install.sh
 
 /etc/udhcpd.conf will be updated.
+Shell bash is required when you run shell script in this
+package.
 
 
 * HOW TO TEST
