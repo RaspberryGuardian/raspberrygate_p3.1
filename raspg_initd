@@ -14,7 +14,7 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin:/opt/raspg/bin:/opt/raspg/lib
 . /lib/init/vars.sh
 . /lib/lsb/init-functions
 
-RASPGDIR=/opt/raspg/
+export RASPGDIR=/opt/raspg
 
 ECHO=echo
 
