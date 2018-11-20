@@ -1,0 +1,12 @@
+[Unit]
+Description=Raspberry Gate Service 
+Documentation=https://github.com/RaspberryGuardian/raspberrygate_p3.1/blob/master/README.md
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/raspg/bin/raspg start
+ExecStop=/opt/raspg/bin/raspg stop
+
+[Install]
+WantedBy = multi-user.target

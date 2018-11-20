@@ -63,6 +63,10 @@ install bridge.sh /opt/raspg/bin
 install router-nat.sh /opt/raspg/bin
 install config-update.sh /opt/raspg/bin
 install hostapd-config-update.sh /opt/raspg/bin
+install raspg_initd /opt/raspg/bin/raspg
+
+install raspg_initd /etc/init.d/raspg
+
 
 #
 #
@@ -70,17 +74,6 @@ install hostapd-config-update.sh /opt/raspg/bin
 bash install-py.sh
 install rgc2ipt.py /opt/raspg/bin/rgc2ipt
 
-
-
-
-if [ -f /opt/raspg/bin/config-update.sh ] ; then
-    echo 'Copy raspg into /etc/init.d/'
-    install raspg_initd /etc/init.d/raspg
-
-else
-    echo 'Install Error... 1'
-    exit 1
-fi
 
 ## Sometime command insserv is not found.
 if  [  -x  /usr/sbin/update-rc.d ] ; then
@@ -94,3 +87,10 @@ else
     /usr/sbin/insserv --default raspg
     /usr/sbin/insserv --remove hostapd
 fi
+
+if [ -d /etc/systemd/user ] ; then
+    install raspg.service /etc/systemd/user
+    systemctl enable raspg.service
+    systemctl start raspg.service
+fi
+
