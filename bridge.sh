@@ -13,27 +13,34 @@ EHTERNET=$(ifconfig | grep $TARGET | awk '{print $1}')
 ##
 
 if [ wlan0$EHTERNET == wlan0 ] ; then
-    ## WiFi start
+    ## WiFi or NOT
     TARGET=wlan0
+fi
+
+## Make Bridge 0 now
+brctl addbr br0
+ifconfig br0 up
+
+### ETH0
+ifconfig eth0 down
+ifconfig eth0 0.0.0.0 up
+brctl addif br0 eth0 
+
+### TARGET
+
+ifconfig $TARGET down
+
+if [ $TARGET == wlan0 ] ; then
     /etc/init.d/hostapd start
 fi
 
-
-ifconfig eth0 down
-ifconfig $TARGET down
-ifconfig br0 down
-brctl addbr br0
-brctl addif br0 eth0 $TARGET
+ifconfig $TARGET 0.0.0.0 up
+brctl addif br0 $TARGET
 brctl show
 
 
-ifconfig eth0 0.0.0.0 up
-ifconfig $TARGET 0.0.0.0 up
-
-
-
 modprobe br_netfilter
-sysctl -w net.bridge.bridge-nf-call-ip6tables=1
+##sysctl -w net.bridge.bridge-nf-call-ip6tables=1
 sysctl -w net.bridge.bridge-nf-call-iptables=1
 sysctl -w net.bridge.bridge-nf-call-arptables=1
 
@@ -46,6 +53,5 @@ if [ -f $RASPGDIR/etc/rgf.conf ] ; then
     popd
     /bin/rm -fr $TMPDIR
 fi
-
 
 exit 0

@@ -1,4 +1,17 @@
-2018-11-13  Hironobu SUZUKI  <hironobu@ewr>
+2019-01-07  Hironobu SUZUKI  <suzuki.hironobu@gmail.com>
+
+	* Raspberry Gate's Security Filtering was updated.
+
+	* rgc2ipt.py: ICMP filtering was added.
+
+	* router-nat.sh: Some bugs were fixed.
+
+	* bridge.sh: Some bugs were fixed.
+
+	
+	
+
+2018-11-13  Hironobu SUZUKI  <suzuki.hironobu@gmail.com>
 
 	* Raspberry Gate's Security Filtering was added.
 	

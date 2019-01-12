@@ -10,5 +10,7 @@ http:  allow
 https: allow
 18080: allow
 
+icmp: allow
+
 default:  deny
 

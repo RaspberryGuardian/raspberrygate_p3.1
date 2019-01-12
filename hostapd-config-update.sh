@@ -10,8 +10,8 @@ if [ $RGCONF -ot $HCONF ] ; then
     exit 0
 fi
 
-SSID=$(grep -e '^\s*\-SSID:\s'  $RGCONF | awk '{print $2}' ) 
-PW=$(grep -e '^\s*\-PW:\s'  $RGCONF | awk '{print $2}' )
+SSID=$(grep -e '^\s*SSID:\s'  $RGCONF | awk '{print $2}' ) 
+PW=$(grep -e '^\s*PW:\s'  $RGCONF | awk '{print $2}' )
 
 if [ x$SSID == x -o x$PW == x ] ; then
     # NO SSID AND/OR NO PASSWORD IN CONFIG FILE

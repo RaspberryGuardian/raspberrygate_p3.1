@@ -3,15 +3,18 @@
 
 Step 1: Become root.
 
-Step 2: run install.sh for install udhcpd
+Step 2: run install.sh
 
- # install.sh
+ # ./install.sh
+
  or
+
  # bash install.sh
 
-/etc/udhcpd.conf will be updated.
-Shell bash is required when you run shell script in this
-package.
+
+Daemon udhcpd is also installed in this install script.  And
+/etc/udhcpd.conf will be updated.  Shell /bin/bash command is required
+when you run shell script of this package.
 
 
 * HOW TO TEST
@@ -20,13 +23,13 @@ package.
 
 run bridge.sh for bridge mode.
 
- # bridge.sh
+ # ./bridge.sh
 
 ** Router mode 
 
 run router-nat for router mode.
 
- # router-nat.sh
+ # ./router-nat.sh
 
 eth0 will get IP address from dhcp.
 eth1 is 192.168.72.1.
@@ -37,7 +40,6 @@ Default DNS servers are google dns server (8.8.8.8 and 8.8.4.4).  If
 you want to update dns in your network, use udhcpd-config-update.sh
 for update /etc/udhcpd.conf file.
 
-# udhcpd-config-update.sh > /etc/udhcpd.conf 
+# ./udhcpd-config-update.sh > /etc/udhcpd.conf 
 
 
-# raspberrygate_p3.1
